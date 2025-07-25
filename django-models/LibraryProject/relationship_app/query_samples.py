@@ -1,17 +1,16 @@
-from relationship_app.models import Author, Book
+from relationship_app.models import Author, Book, Library
 
-# Create and save new Author
-author = Author.objects.create(name="Edesie Gabriel", age=30)
+# 1. List all books in a specific library
+def list_books_in_library(library_name):
+    library = Library.objects.get(name=library_name)
+    return library.books.all()
 
-# Create and save new Book linked to the author
-book = Book.objects.create(title="Mastering Django", publication_date="2025-07-25", author=author)
+# 2. Query all books by a specific author
+def get_books_by_author(author_name):
+    author = Author.objects.get(name=author_name)
+    return author.book_set.all()
 
-# Fetch and print all authors
-print("Authors:")
-for a in Author.objects.all():
-    print(f"Name: {a.name}, Age: {a.age}")
-
-# Fetch and print all books
-print("\nBooks:")
-for b in Book.objects.all():
-    print(f"Title: {b.title}, Published: {b.publication_date}, Author: {b.author.name}")
+# 3. Retrieve the librarian for a specific library
+def get_librarian_for_library(library_name):
+    library = Library.objects.get(name=library_name)
+    return library.librarian
