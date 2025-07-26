@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import user_passes_test, permission_required
 from .models import Book
 from .forms import BookForm
-from django.contrib.auth.decorators import user_passes_test, permission_required
 
 # Book list view - accessible to all authenticated users
 def list_books(request):
