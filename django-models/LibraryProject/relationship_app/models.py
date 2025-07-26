@@ -41,6 +41,12 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+    class Meta:
+        permissions = [
+            ("can_publish_book", "Can publish book"),
+        ]
+    
+    
 
 
 class Librarian(models.Model):
