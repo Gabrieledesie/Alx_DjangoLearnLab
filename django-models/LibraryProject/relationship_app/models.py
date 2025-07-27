@@ -4,7 +4,6 @@ from django.conf import settings
 from django.utils import timezone
 
 
-# ✅ Custom User Manager
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -21,7 +20,6 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
-# ✅ Custom User Model
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     date_of_birth = models.DateField(null=True, blank=True)
@@ -33,7 +31,6 @@ class CustomUser(AbstractUser):
         return self.username
 
 
-# ✅ UserProfile using AUTH_USER_MODEL
 class UserProfile(models.Model):
     ROLE_CHOICES = [
         ('Admin', 'Admin'),
@@ -47,7 +44,6 @@ class UserProfile(models.Model):
         return f"{self.user.username} - {self.role}"
 
 
-# ✅ Author model
 class Author(models.Model):
     name = models.CharField(max_length=100, null=True)
 
@@ -55,7 +51,6 @@ class Author(models.Model):
         return self.name
 
 
-# ✅ Library model
 class Library(models.Model):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -64,7 +59,6 @@ class Library(models.Model):
         return self.name
 
 
-# ✅ Book model
 class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
@@ -84,7 +78,6 @@ class Book(models.Model):
         ]
 
 
-# ✅ Librarian model
 class Librarian(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     library = models.ForeignKey(Library, on_delete=models.CASCADE)
@@ -93,7 +86,6 @@ class Librarian(models.Model):
         return self.user.username
 
 
-# ✅ Member model
 class Member(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     borrowed_books = models.ManyToManyField(Book, blank=True)
@@ -102,7 +94,6 @@ class Member(models.Model):
         return self.user.username
 
 
-# ✅ Audit Log for security and activity tracking
 class UserActionLog(models.Model):
     ACTION_CHOICES = [
         ('LOGIN', 'Login'),
